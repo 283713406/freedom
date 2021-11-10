@@ -1,41 +1,47 @@
-FREEDOM
+# FREEDOM
 
 FREEDOM 项目是使用go语言实现的对股票基本面进行分析的程序，通过命令行方式进行操作。数据来源于东方财富网、亿牛网、新浪财经、天天基金。
 
 该程序不构成任何投资建议，程序只是个人辅助工具，具体分析仍然需要自己判断。
 
-FREEDOM 解决什么问题？
+
+# FREEDOM 解决什么问题？
+
 FREEDOM 要解决的问题是，在使用东方财富选股器按设置的条件筛选出股票后，通常筛选出的股票数量较多，需要人工对每一支股票的财报指标进行分析并判断是否可以长期持有。
 
 需要分析的指标较多，并且有一些指标无法直接获取，需要进行计算甚至需要根据历史财务数据进行计算，在大量股票需要分析的时候这是一个繁琐的工作，因此开发了 FREEDOM 来让这个过程自动化。
 
-功能
+
+# 功能
+
 当前已实现的功能：
 
-按指定条件的默认值自动筛选满足条件的公司
-按指定条件的自定义值自动筛选满足条件的公司
-实现股票检测器
-支持 ROE、EPS、营收、利润、整体质地、估值、合理价、负债率、历史波动率、市值 检测
-将筛选结果导出为 JSON 文件
-将筛选结果导出为 CSV 文件
-将筛选结果导出为 EXCEL 文件，并按行业、价格、历史波动率分工作表
-支持关键词搜索股票并对其进行评估
-检测器支持对银行股按不同规则进行检测
-支持净利率和毛利率稳定性判断
-支持 PEG 检测
-支持营收本业比检测
-支持财报审计意见检测
-支持负债流动比检测
-支持现金流检测
+- 按指定条件的默认值自动筛选满足条件的公司
+- 按指定条件的自定义值自动筛选满足条件的公司
+- 实现股票检测器
+- 支持 ROE、EPS、营收、利润、整体质地、估值、合理价、负债率、历史波动率、市值 检测
+- 将筛选结果导出为 JSON 文件
+- 将筛选结果导出为 CSV 文件
+- 将筛选结果导出为 EXCEL 文件，并按行业、价格、历史波动率分工作表
+- 支持关键词搜索股票并对其进行评估
+- 检测器支持对银行股按不同规则进行检测
+- 支持净利率和毛利率稳定性判断
+- 支持 PEG 检测
+- 支持营收本业比检测
+- 支持财报审计意见检测
+- 支持负债流动比检测
+- 支持现金流检测
 
 
-使用方法
+# 使用方法
+
 git clone https://github.com/283713406/freedom.git
 
 go build -o freedom main.go
 
 查看使用说明：
 
+```
 $ ./freedom -h
 NAME:
    freedom - mamba 的股票筛选和检测程序
@@ -61,12 +67,15 @@ GLOBAL OPTIONS:
 
 COPYRIGHT:
    (c) 2021 mamba
+```
    
-exportor
+## exportor
+
 exportor 是数据导出器，不使用参数默认导出 EXCEL 文件。
 
 查看使用说明：
 
+```
 ./freedom exportor -h
 NAME:
    freedom exportor - 股票筛选导出器
@@ -124,23 +133,42 @@ OPTIONS:
    --checker.is_check_netprofit_grow               是否检测净利润逐年递增 (default: false)
    --checker.min_gxl value                         最低股息率 (default: 0.5)
    --help, -h                                      show help (default: false)
+```
+
 命令行使用示例：
 
-导出 JSON 文件：
+- 导出 JSON 文件：
+```
 ./freedom -l error exportor -f ./stocks.json
-导出 CSV 文件：
+```
+
+- 导出 CSV 文件：
+```
 ./freedom -l error exportor -f ./stocks.csv
-导出 EXCEL 文件：
+```
+
+- 导出 EXCEL 文件：
+```
 ./freedom -l error exportor -f ./stocks.xlsx
-导出全部支持的类型：
+```
+
+- 导出全部支持的类型：
+```
 ./freedom -l error exportor -f ./stocks.all
-自定义筛选、检测参数
+```
+
+- 自定义筛选、检测参数
+```
 ./freedom -l error exportor -f ./stocks.xlsx --filter.min_roe=6 --checker.min_roe=6
-checker
+```
+
+## checker
+
 给定关键词/股票代码搜索股票进行评估检测
 
 查看使用说明：
 
+```
 ./freedom checker -h
 NAME:
    freedom checker - 股票检测器
@@ -175,6 +203,10 @@ OPTIONS:
    --checker.is_check_netprofit_grow     是否检测净利润逐年递增 (default: false)
    --checker.min_gxl value               最低股息率 (default: 0.5)
    --help, -h                            show help (default: false)
+```
+
 命令行使用示例：
 
+```
 ./freedom -l error checker -k 兴业银行
+```
