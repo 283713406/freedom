@@ -6,6 +6,7 @@ import (
 	"context"
 	"encoding/json"
 	"fmt"
+	"strings"
 	"time"
 
 	"github.com/283713406/freedom/core"
@@ -43,6 +44,13 @@ func FlagsExportor() []cli.Flag {
 			EnvVars:     []string{"FREEDOM_EXPORTOR_DISABLE_CHECK"},
 			DefaultText: "false",
 		},
+		&cli.StringFlag{
+		Name:     "keyword",
+		Aliases:  []string{"k"},
+		Value:    "",
+		Usage:    "给定股票名称或代码，多个股票使用/分割。如: 招商银行/中国平安/600519，导出其财务分析表格",
+		Required: true,
+	    },
 	}
 }
 
@@ -219,6 +227,10 @@ func ActionExportor() func(c *cli.Context) error {
 		loglevel := c.String("loglevel")
 		logging.SetLevel(loglevel)
 
+		keyword := c.String("keyword")
+		keywords := strings.Split(keyword, "/")
+		filename := c.String("filename")
+
 		checkerOpts := NewCheckerOptions(c)
 		checker := core.NewChecker(ctx, checkerOpts)
 
@@ -234,7 +246,11 @@ func ActionExportor() func(c *cli.Context) error {
 			"checker": checker,
 		}, "", "  ")
 		logging.Debug(ctx, "exportor params:"+string(b))
-		Export(ctx, c.String("filename"), selector)
+		if len(keywords) != 0 {
+			ExportRNg(ctx, keywords, selector)
+		}else {
+			Export(ctx, filename, selector)
+		}
 		return nil
 	}
 }

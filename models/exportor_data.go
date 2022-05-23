@@ -127,6 +127,96 @@ type ExportorData struct {
 	// MainMoneyNetInflows string `json:"main_money_net_inflows"    csv:"主力资金净流入"`
 }
 
+// ExportorRNgData 数据模板
+type ExportorRNgData struct {
+	// 股票名
+	Name string `json:"name"                      csv:"股票名"`
+	// 毛利率
+	MLL []float64 `json:"mll"                    csv:"毛利率"`
+	// 三项费用率
+	SXFYL []float64 `json:"sxfyl"                    csv:"三项费用率"`
+	// 销售费用率
+	XSFYL []float64 `json:"xsfyl"                    csv:"销售费用率"`
+	// 管理费用率
+	GLFYL []float64 `json:"glfyl"                    csv:"管理费用率"`
+	// 财务费用率
+	CWFYL []float64 `json:"cwfyl"                    csv:"财务费用率"`
+	// 净利润率
+	JLRL []float64 `json:"jlrl"                    csv:"净利润率"`
+	// 资产负债率
+	ZCFZL []float64 `json:"zcfzl"                    csv:"资产负债率"`
+	// 固定资产比重
+	GDZCBZ []float64 `json:"gdzcbz"                    csv:"固定资产比重"`
+	// 净资产收益率
+	JZCSYL []float64 `json:"jzcsyl"                    csv:"净资产收益率"`
+	// 总资产周转率
+	ZZCZZL []float64 `json:"zzczzl"                    csv:"总资产周转率"`
+	// 经营性现金流净额比净利润
+	XJLBJLR []float64 `json:"xjlbjlr"                    csv:"经营性现金流净额比净利润"`
+	// 营业收入增长率
+	YYSRZZL []float64 `json:"yysrzzl"           csv:"营业收入增长率"`
+	// 扣非净利润增长率
+	KFJLLZZL []float64 `json:"kfjlrzzl"           csv:"扣非净利润增长率"`
+}
+
+// ExportorDataList 要导出的数据列表
+type ExportorRNgDataList []ExportorRNgData
+
+// NewExportorRNgData 创建 ExportotRNgData 对象
+func NewExportorRNgData(ctx context.Context, stock Stock) ExportorRNgData {
+
+	return ExportorRNgData{
+		Name: stock.BaseInfo.SecurityNameAbbr,
+		// 毛利率
+		MLL: stock.HistoricalFinaMainData.ValueList(
+			ctx,
+			eastmoney.ValueListTypeMLL,
+			5,
+			eastmoney.FinaReportTypeYear,
+		),
+		// 三项费用率
+		SXFYL: stock.HistoricalFinaMainData.ValueList(ctx, eastmoney.ValueListTypeJLL, 5, eastmoney.FinaReportTypeYear),
+		// 销售费用率
+		XSFYL: stock.HistoricalFinaMainData.ValueList(ctx, eastmoney.ValueListTypeJLL, 5, eastmoney.FinaReportTypeYear),
+		// 管理费用率
+		GLFYL: stock.HistoricalFinaMainData.ValueList(ctx, eastmoney.ValueListTypeJLL, 5, eastmoney.FinaReportTypeYear),
+		// 财务费用率
+		CWFYL: stock.HistoricalFinaMainData.ValueList(ctx, eastmoney.ValueListTypeJLL, 5, eastmoney.FinaReportTypeYear),
+		// 净利润率
+		JLRL: stock.HistoricalFinaMainData.ValueList(ctx, eastmoney.ValueListTypeJLL, 5, eastmoney.FinaReportTypeYear),
+		// 资产负债率
+		ZCFZL: stock.HistoricalFinaMainData.ValueList(ctx, eastmoney.ValueListTypeJLL, 5, eastmoney.FinaReportTypeYear),
+		// 固定资产比重
+		GDZCBZ: stock.HistoricalFinaMainData.ValueList(ctx, eastmoney.ValueListTypeJLL, 5, eastmoney.FinaReportTypeYear),
+		// 净资产收益率
+		JZCSYL: stock.HistoricalFinaMainData.ValueList(ctx, eastmoney.ValueListTypeJLL, 5, eastmoney.FinaReportTypeYear),
+		// 总资产周转率
+		ZZCZZL: stock.HistoricalFinaMainData.ValueList(ctx, eastmoney.ValueListTypeJLL, 5, eastmoney.FinaReportTypeYear),
+		// 经营性现金流净额比净利润
+		XJLBJLR: stock.HistoricalFinaMainData.ValueList(ctx, eastmoney.ValueListTypeJLL, 5, eastmoney.FinaReportTypeYear),
+		// 营业收入增长率
+		YYSRZZL: stock.HistoricalFinaMainData.ValueList(ctx, eastmoney.ValueListTypeJLL, 5, eastmoney.FinaReportTypeYear),
+		// 扣非净利润增长率
+		KFJLLZZL: stock.HistoricalFinaMainData.ValueList(ctx, eastmoney.ValueListTypeJLL, 5, eastmoney.FinaReportTypeYear),
+	}
+}
+
+// GetIndustryList 获取行业分类列表
+func (d ExportorRNgDataList) GetName() []string {
+	result := []string{}
+	for _, stock := range d {
+		if !utils.IsStrInSlice(stock.Name, result) {
+			result = append(result, stock.Name)
+		}
+	}
+	return result
+}
+
+// GetHeaderValueMap 获取以 csv tag 为 key 的 Data map
+func (d ExportorRNgData) GetHeaderValueMap() map[string]interface{} {
+	return utils.StructToMap(&d, "csv")
+}
+
 // GetHeaderValueMap 获取以 csv tag 为 key 的 Data map
 func (d ExportorData) GetHeaderValueMap() map[string]interface{} {
 	return utils.StructToMap(&d, "csv")
