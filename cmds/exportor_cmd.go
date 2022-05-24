@@ -45,11 +45,11 @@ func FlagsExportor() []cli.Flag {
 			DefaultText: "false",
 		},
 		&cli.StringFlag{
-		Name:     "keyword",
-		Aliases:  []string{"k"},
-		Value:    "",
-		Usage:    "给定股票名称或代码，多个股票使用/分割。如: 招商银行/中国平安/600519，导出其财务分析表格",
-		Required: true,
+		    Name:     "keyword",
+		    Aliases:  []string{"k"},
+		    Value:    "",
+		    Usage:    "给定股票名称或代码，多个股票使用/分割。如: 招商银行/中国平安/600519，导出其财务分析表格",
+		    Required: false,
 	    },
 	}
 }
@@ -246,7 +246,7 @@ func ActionExportor() func(c *cli.Context) error {
 			"checker": checker,
 		}, "", "  ")
 		logging.Debug(ctx, "exportor params:"+string(b))
-		if len(keywords) != 0 {
+		if len(keyword) != 0 {
 			ExportRNg(ctx, keywords, selector)
 		}else {
 			Export(ctx, filename, selector)
