@@ -20,10 +20,9 @@ FREEDOM 要解决的问题是，在使用东方财富选股器按设置的条件
 - 按指定条件的自定义值自动筛选满足条件的公司
 - 实现股票检测器
 - 支持 ROE、EPS、营收、利润、整体质地、估值、合理价、负债率、历史波动率、市值 检测
-- 将筛选结果导出为 JSON 文件
-- 将筛选结果导出为 CSV 文件
 - 将筛选结果导出为 EXCEL 文件，并按行业、价格、历史波动率分工作表
 - 支持关键词搜索股票并对其进行评估
+- 支持按关键词导出股票的相关信息为 EXCEL 表
 - 检测器支持对银行股按不同规则进行检测
 - 支持净利率和毛利率稳定性判断
 - 支持 PEG 检测
@@ -71,7 +70,7 @@ COPYRIGHT:
    
 ## exportor
 
-exportor 是数据导出器，不使用参数默认导出 EXCEL 文件。
+exportor 是数据导出器，导出 EXCEL 文件。
 
 查看使用说明：
 
@@ -81,11 +80,12 @@ NAME:
    freedom exportor - 股票筛选导出器
 
 USAGE:
-   将按条件筛选出的股票导出到文件，根据文件后缀名自动判断导出类型。支持的后缀名：[xlsx|csv|json|all]，all 表示导出全部支持的类型。
+   将按条件筛选出的股票导出到 EXCEL 文件。
 
 OPTIONS:
    --filename value, -f value                      指定导出文件名 (default: ./result/freedom-20211110.xlsx) [$FREEDOM_EXPORTOR_FILENAME]
    --disable_check, -C                             关闭基本面检测，导出所有原始筛选结果 (default: false) [$FREEDOM_EXPORTOR_DISABLE_CHECK]
+   --keyword value, -k value                       给定股票名称或代码，多个股票使用/分割。如: 招商银行/中国平安/600519，导出其财务分析表格
    --filter.min_roe value                          最低净资产收益率 (%) (default: 1.0)
    --filter.min_netprofit_yoy_ratio value          最低净利润增长率 (%) (default: 0.0)
    --filter.min_toi_yoy_ratio value                最低营收增长率 (%) (default: 0.0)
@@ -137,29 +137,19 @@ OPTIONS:
 
 命令行使用示例：
 
-- 导出 JSON 文件：
-```
-./freedom -l error exportor -f ./stocks.json
-```
-
-- 导出 CSV 文件：
-```
-./freedom -l error exportor -f ./stocks.csv
-```
-
 - 导出 EXCEL 文件：
 ```
 ./freedom -l error exportor -f ./stocks.xlsx
 ```
 
-- 导出全部支持的类型：
-```
-./freedom -l error exportor -f ./stocks.all
-```
-
 - 自定义筛选、检测参数
 ```
 ./freedom -l error exportor -f ./stocks.xlsx --filter.min_roe=6 --checker.min_roe=6
+```
+
+- 关键字筛选并导出 EXCEL 文件
+```
+./freedom -l error exportor -k  兴业银行/分众传媒
 ```
 
 ## checker
