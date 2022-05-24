@@ -2,7 +2,12 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="5989c3c1-3b7a-4628-9f00-a46808569d39" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/cmds/exportor_cmd.go" beforeDir="false" afterPath="$PROJECT_DIR$/cmds/exportor_cmd.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmds/exportor_rng_excel.go" beforeDir="false" afterPath="$PROJECT_DIR$/cmds/exportor_rng_excel.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/datacenter/eastmoney/fina_income.go" beforeDir="false" afterPath="$PROJECT_DIR$/datacenter/eastmoney/fina_income.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/datacenter/eastmoney/fina_main.go" beforeDir="false" afterPath="$PROJECT_DIR$/datacenter/eastmoney/fina_main.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/models/exportor_data.go" beforeDir="false" afterPath="$PROJECT_DIR$/models/exportor_data.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/utils/statistics.go" beforeDir="false" afterPath="$PROJECT_DIR$/utils/statistics.go" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />

@@ -2,8 +2,10 @@ package utils
 
 import (
 	"errors"
+	"fmt"
 	"math"
 	"sort"
+	"strconv"
 
 	mapset "github.com/deckarep/golang-set"
 )
@@ -73,4 +75,9 @@ func JaccardSimilarity(s1, s2 []interface{}) float64 {
 	AiB := A.Intersect(B)
 	AuB := A.Union(B)
 	return float64(AiB.Cardinality()) / float64(AuB.Cardinality())
+}
+
+func GetDivisor(a, b float64) float64 {
+    res, _ := strconv.ParseFloat(fmt.Sprintf("%.2f", float64(a)/float64(b)), 64)
+	return res
 }

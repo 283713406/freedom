@@ -258,6 +258,16 @@ const (
 	ValueListTypeMLL ValueListType = "MLL"
 	// ValueListTypeJLL 净利率
 	ValueListTypeJLL ValueListType = "JLL"
+	// ValueListTypeTOZZL 总资产周转率
+	ValueListTypeTOZZL ValueListType = "ZZCZZL"
+	// ValueListTypeZCFZL 资产负债率
+	ValueListTypeZCFZL ValueListType = "ZCFZL"
+	// ValueListTypeXJLBJLR 经营性现金流净额比净利润
+	ValueListTypeXJLBJLR ValueListType = "XJLBJLR"
+	// ValueListTypeYYSRZZL 营业收入增长率
+	ValueListTypeYYSRZZL ValueListType = "YYSRZZL"
+	// ValueListTypeJLRZZL 净利润增长率
+	ValueListTypeJLRZZL ValueListType = "JLRZZL"
 )
 
 // FinaValueList 历史数据值列表
@@ -309,6 +319,16 @@ func (h HistoricalFinaMainData) ValueList(
 			value = i.Xsmll
 		case ValueListTypeJLL:
 			value = i.Xsjll
+		case ValueListTypeTOZZL:
+			value = i.Toazzl
+		case ValueListTypeZCFZL:
+			value = i.Zcfzl
+		case ValueListTypeXJLBJLR:
+			value = utils.GetDivisor(i.Jyxjlyysr * i.Totaloperatereve , i.Parentnetprofit)
+		case ValueListTypeYYSRZZL:
+			value = i.Totaloperaterevetz
+		case ValueListTypeJLRZZL:
+			value = i.Kcfjcxsyjlrtz
 		}
 		r = append(r, value)
 	}

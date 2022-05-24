@@ -223,6 +223,79 @@ type GincomeData struct {
 // GincomeDataList 利润表历史数据
 type GincomeDataList []GincomeData
 
+// FinaReportType 财报类型
+type GinReportType string
+
+const (
+	// GinReportTypeQ1 一季报
+	GinReportTypeQ1 = "一季报"
+	// GinReportTypeMid 中报
+	GinReportTypeMid = "中报"
+	// GinReportTypeQ3 三季报
+	GinReportTypeQ3 = "三季报"
+	// GinReportTypeYear 年报
+	GinReportTypeYear = "年报"
+)
+
+// FilterByReportType 按财报类型过滤：一季报，中报，三季报，年报
+func (g GincomeDataList) FilterByReportType(ctx context.Context, reportType FinaReportType) GincomeDataList {
+	result := GincomeDataList{}
+	for _, i := range g {
+		if i.ReportType == string(reportType) {
+			result = append(result, i)
+		}
+	}
+	return result
+}
+
+const (
+	// ValueListTypeSXFYL 三项费用率
+	ValueListTypeSXFYL ValueListType = "SXFYL"
+	// ValueListTypeXSFYY 销售费用率
+	ValueListTypeXSFYY ValueListType = "XSFYY"
+	// ValueListTypeGLFYY 管理费用率
+	ValueListTypeGLFYY ValueListType = "GLFYY"
+	// ValueListTypeCWFYY 财务费用率
+	ValueListTypeCWFYY ValueListType = "CWFYY"
+)
+
+// ValueList 获取历史数据值，最新的在最前面
+func (g GincomeDataList) ValueList(
+	ctx context.Context,
+	valueType ValueListType,
+	count int,
+	reportType FinaReportType,
+) FinaValueList {
+	r := []float64{}
+	data := g.FilterByReportType(ctx, reportType)
+	dataLen := len(data)
+	if dataLen == 0 {
+		return r
+	}
+	if count > 0 {
+		if count > dataLen {
+			count = dataLen
+		}
+		data = data[:count]
+	}
+	for _, i := range data {
+		value := float64(-1)
+		switch valueType {
+		case ValueListTypeSXFYL:
+			value = utils.GetDivisor(i.SaleExpense, i.TotalOperateIncome) + utils.GetDivisor(i.ManageExpense, i.TotalOperateIncome) +
+				utils.GetDivisor(i.FinanceExpense, i.TotalOperateIncome)
+		case ValueListTypeXSFYY:
+			value = utils.GetDivisor(i.SaleExpense, i.TotalOperateIncome)
+		case ValueListTypeGLFYY:
+			value = utils.GetDivisor(i.ManageExpense, i.TotalOperateIncome)
+		case ValueListTypeCWFYY:
+			value = utils.GetDivisor(i.FinanceExpense, i.TotalOperateIncome)
+		}
+		r = append(r, value)
+	}
+	return r
+}
+
 // RespFinaGincomeData 财务分析利润表接口返回结构
 type RespFinaGincomeData struct {
 	Version string `json:"version"`

@@ -110,7 +110,12 @@ func (e ExportorRNg) ExportRNgExcel(ctx context.Context, filename string) (resul
 
 	for _, sheet := range sheets {
 		col := 2
+		logging.Debugf(ctx,"sheet is %s", sheet)
 		for _, stock := range e.Stocks {
+			if stock.Name != sheet {
+				continue
+			}
+			logging.Debugf(ctx,"Stocks name is %s", stock.Name)
 			headerValueMap := stock.GetHeaderValueMap()
 			for k, line := range lines {
 				row := k + 3

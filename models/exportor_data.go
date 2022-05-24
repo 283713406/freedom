@@ -168,36 +168,31 @@ func NewExportorRNgData(ctx context.Context, stock Stock) ExportorRNgData {
 	return ExportorRNgData{
 		Name: stock.BaseInfo.SecurityNameAbbr,
 		// 毛利率
-		MLL: stock.HistoricalFinaMainData.ValueList(
-			ctx,
-			eastmoney.ValueListTypeMLL,
-			5,
-			eastmoney.FinaReportTypeYear,
-		),
+		MLL: stock.HistoricalFinaMainData.ValueList(ctx, eastmoney.ValueListTypeMLL, 5,	eastmoney.FinaReportTypeYear),
 		// 三项费用率
-		SXFYL: stock.HistoricalFinaMainData.ValueList(ctx, eastmoney.ValueListTypeJLL, 5, eastmoney.FinaReportTypeYear),
+		SXFYL: stock.HistoricalGincomeList.ValueList(ctx, eastmoney.ValueListTypeSXFYL, 5, eastmoney.FinaReportTypeYear),
 		// 销售费用率
-		XSFYL: stock.HistoricalFinaMainData.ValueList(ctx, eastmoney.ValueListTypeJLL, 5, eastmoney.FinaReportTypeYear),
+		XSFYL: stock.HistoricalFinaMainData.ValueList(ctx, eastmoney.ValueListTypeXSFYY, 5, eastmoney.FinaReportTypeYear),
 		// 管理费用率
-		GLFYL: stock.HistoricalFinaMainData.ValueList(ctx, eastmoney.ValueListTypeJLL, 5, eastmoney.FinaReportTypeYear),
+		GLFYL: stock.HistoricalFinaMainData.ValueList(ctx, eastmoney.ValueListTypeGLFYY, 5, eastmoney.FinaReportTypeYear),
 		// 财务费用率
-		CWFYL: stock.HistoricalFinaMainData.ValueList(ctx, eastmoney.ValueListTypeJLL, 5, eastmoney.FinaReportTypeYear),
+		CWFYL: stock.HistoricalFinaMainData.ValueList(ctx, eastmoney.ValueListTypeCWFYY, 5, eastmoney.FinaReportTypeYear),
 		// 净利润率
 		JLRL: stock.HistoricalFinaMainData.ValueList(ctx, eastmoney.ValueListTypeJLL, 5, eastmoney.FinaReportTypeYear),
 		// 资产负债率
-		ZCFZL: stock.HistoricalFinaMainData.ValueList(ctx, eastmoney.ValueListTypeJLL, 5, eastmoney.FinaReportTypeYear),
+		ZCFZL: stock.HistoricalFinaMainData.ValueList(ctx, eastmoney.ValueListTypeZCFZL, 5, eastmoney.FinaReportTypeYear),
 		// 固定资产比重
 		GDZCBZ: stock.HistoricalFinaMainData.ValueList(ctx, eastmoney.ValueListTypeJLL, 5, eastmoney.FinaReportTypeYear),
 		// 净资产收益率
-		JZCSYL: stock.HistoricalFinaMainData.ValueList(ctx, eastmoney.ValueListTypeJLL, 5, eastmoney.FinaReportTypeYear),
+		JZCSYL: stock.HistoricalFinaMainData.ValueList(ctx, eastmoney.ValueListTypeROE, 5, eastmoney.FinaReportTypeYear),
 		// 总资产周转率
-		ZZCZZL: stock.HistoricalFinaMainData.ValueList(ctx, eastmoney.ValueListTypeJLL, 5, eastmoney.FinaReportTypeYear),
+		ZZCZZL: stock.HistoricalFinaMainData.ValueList(ctx, eastmoney.ValueListTypeTOZZL, 5, eastmoney.FinaReportTypeYear),
 		// 经营性现金流净额比净利润
-		XJLBJLR: stock.HistoricalFinaMainData.ValueList(ctx, eastmoney.ValueListTypeJLL, 5, eastmoney.FinaReportTypeYear),
+		XJLBJLR: stock.HistoricalFinaMainData.ValueList(ctx, eastmoney.ValueListTypeXJLBJLR, 5, eastmoney.FinaReportTypeYear),
 		// 营业收入增长率
-		YYSRZZL: stock.HistoricalFinaMainData.ValueList(ctx, eastmoney.ValueListTypeJLL, 5, eastmoney.FinaReportTypeYear),
+		YYSRZZL: stock.HistoricalFinaMainData.ValueList(ctx, eastmoney.ValueListTypeYYSRZZL, 5, eastmoney.FinaReportTypeYear),
 		// 扣非净利润增长率
-		KFJLLZZL: stock.HistoricalFinaMainData.ValueList(ctx, eastmoney.ValueListTypeJLL, 5, eastmoney.FinaReportTypeYear),
+		KFJLLZZL: stock.HistoricalFinaMainData.ValueList(ctx, eastmoney.ValueListTypeJLRZZL, 5, eastmoney.FinaReportTypeYear),
 	}
 }
 
