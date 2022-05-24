@@ -3,14 +3,16 @@
   <component name="ChangeListManager">
     <list default="true" id="5989c3c1-3b7a-4628-9f00-a46808569d39" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmds/exportor_cmd.go" beforeDir="false" afterPath="$PROJECT_DIR$/cmds/exportor_cmd.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmds/exportor.go" beforeDir="false" afterPath="$PROJECT_DIR$/cmds/exportor.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/datacenter/eastmoney/fina_income.go" beforeDir="false" afterPath="$PROJECT_DIR$/datacenter/eastmoney/fina_income.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/models/exportor_data.go" beforeDir="false" afterPath="$PROJECT_DIR$/models/exportor_data.go" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
-  <component name="GOROOT" path="D:\Go\go" />
+  <component name="GOROOT" path="C:/Program Files/Go" />
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
@@ -36,7 +38,7 @@
     <property name="go.sdk.automatically.set" value="true" />
     <property name="go.tried.to.enable.integration.vgo.integrator" value="true" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$/cmds" />
-    <property name="settings.editor.selected.configurable" value="go.sdk" />
+    <property name="settings.editor.selected.configurable" value="go.vgo" />
   </component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
@@ -45,8 +47,31 @@
       <recent name="D:\kylincloud\qgr\src\stock\freedom\logging" />
     </key>
   </component>
+  <component name="RunDashboard">
+    <option name="ruleStates">
+      <list>
+        <RuleState>
+          <option name="name" value="ConfigurationTypeDashboardGroupingRule" />
+        </RuleState>
+        <RuleState>
+          <option name="name" value="StatusDashboardGroupingRule" />
+        </RuleState>
+      </list>
+    </option>
+  </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="1" />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
   </component>
   <component name="VgoProject">
     <integration-enabled>true</integration-enabled>

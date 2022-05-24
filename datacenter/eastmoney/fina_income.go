@@ -282,14 +282,14 @@ func (g GincomeDataList) ValueList(
 		value := float64(-1)
 		switch valueType {
 		case ValueListTypeSXFYL:
-			value = utils.GetDivisor(i.SaleExpense, i.TotalOperateIncome) + utils.GetDivisor(i.ManageExpense, i.TotalOperateIncome) +
-				utils.GetDivisor(i.FinanceExpense, i.TotalOperateIncome)
+			value = (i.SaleExpense/i.TotalOperateIncome) * 100 + (i.ManageExpense/i.TotalOperateIncome) * 100 +
+				(i.FinanceExpense/i.TotalOperateIncome) * 100
 		case ValueListTypeXSFYY:
-			value = utils.GetDivisor(i.SaleExpense, i.TotalOperateIncome)
+			value = (i.SaleExpense/i.TotalOperateIncome) * 100
 		case ValueListTypeGLFYY:
-			value = utils.GetDivisor(i.ManageExpense, i.TotalOperateIncome)
+			value = (i.ManageExpense/i.TotalOperateIncome) * 100
 		case ValueListTypeCWFYY:
-			value = utils.GetDivisor(i.FinanceExpense, i.TotalOperateIncome)
+			value = (i.FinanceExpense/i.TotalOperateIncome) * 100
 		}
 		r = append(r, value)
 	}

@@ -172,11 +172,11 @@ func NewExportorRNgData(ctx context.Context, stock Stock) ExportorRNgData {
 		// 三项费用率
 		SXFYL: stock.HistoricalGincomeList.ValueList(ctx, eastmoney.ValueListTypeSXFYL, 5, eastmoney.FinaReportTypeYear),
 		// 销售费用率
-		XSFYL: stock.HistoricalFinaMainData.ValueList(ctx, eastmoney.ValueListTypeXSFYY, 5, eastmoney.FinaReportTypeYear),
+		XSFYL: stock.HistoricalGincomeList.ValueList(ctx, eastmoney.ValueListTypeXSFYY, 5, eastmoney.FinaReportTypeYear),
 		// 管理费用率
-		GLFYL: stock.HistoricalFinaMainData.ValueList(ctx, eastmoney.ValueListTypeGLFYY, 5, eastmoney.FinaReportTypeYear),
+		GLFYL: stock.HistoricalGincomeList.ValueList(ctx, eastmoney.ValueListTypeGLFYY, 5, eastmoney.FinaReportTypeYear),
 		// 财务费用率
-		CWFYL: stock.HistoricalFinaMainData.ValueList(ctx, eastmoney.ValueListTypeCWFYY, 5, eastmoney.FinaReportTypeYear),
+		CWFYL: stock.HistoricalGincomeList.ValueList(ctx, eastmoney.ValueListTypeCWFYY, 5, eastmoney.FinaReportTypeYear),
 		// 净利润率
 		JLRL: stock.HistoricalFinaMainData.ValueList(ctx, eastmoney.ValueListTypeJLL, 5, eastmoney.FinaReportTypeYear),
 		// 资产负债率
