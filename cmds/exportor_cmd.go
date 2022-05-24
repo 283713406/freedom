@@ -263,7 +263,7 @@ func CommandExportor() *cli.Command {
 	cmd := &cli.Command{
 		Name:      ProcessorExportor,
 		Usage:     "股票筛选导出器",
-		UsageText: "将按条件筛选出的股票导出到文件，根据文件后缀名自动判断导出类型。支持的后缀名：[xlsx|csv|json|all]，all 表示导出全部支持的类型。",
+		UsageText: "将按条件筛选出的股票导出到 EXCEL 文件。",
 		Flags:     flags,
 		Action:    ActionExportor(),
 	}
