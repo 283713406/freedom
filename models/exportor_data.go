@@ -128,9 +128,13 @@ type ExportorData struct {
 }
 
 // ExportorRNgData 数据模板
+//"营业收入", "毛利率", "三项费用率", "销售费用率", "管理费用率", "财务费用率", "净利润", "资产负债率",
+//"净资产收益率", "净利润率", "权益乘数",  "总资产周转率", "经营性现金流净额比净利润", "营业收入增长率", "扣非净利润增长率"
 type ExportorRNgData struct {
 	// 股票名
 	Name string `json:"name"                      csv:"股票名"`
+	// 营业收入
+	YYSR []float64 `json:"yysr"                    csv:"营业收入"`
 	// 毛利率
 	MLL []float64 `json:"mll"                    csv:"毛利率"`
 	// 三项费用率
@@ -141,14 +145,16 @@ type ExportorRNgData struct {
 	GLFYL []float64 `json:"glfyl"                    csv:"管理费用率"`
 	// 财务费用率
 	CWFYL []float64 `json:"cwfyl"                    csv:"财务费用率"`
-	// 净利润率
-	JLRL []float64 `json:"jlrl"                    csv:"净利润率"`
+	// 净利润
+	JLR []float64 `json:"jlr"                    csv:"净利润"`
 	// 资产负债率
 	ZCFZL []float64 `json:"zcfzl"                    csv:"资产负债率"`
-	// 固定资产比重
-	GDZCBZ []float64 `json:"gdzcbz"                    csv:"固定资产比重"`
 	// 净资产收益率
 	JZCSYL []float64 `json:"jzcsyl"                    csv:"净资产收益率"`
+	// 净利润率
+	JLRL []float64 `json:"jlrl"                    csv:"净利润率"`
+	// 权益乘数
+	QYCS []float64 `json:"qycs"                    csv:"权益乘数"`
 	// 总资产周转率
 	ZZCZZL []float64 `json:"zzczzl"                    csv:"总资产周转率"`
 	// 经营性现金流净额比净利润
@@ -167,6 +173,8 @@ func NewExportorRNgData(ctx context.Context, stock Stock) ExportorRNgData {
 
 	return ExportorRNgData{
 		Name: stock.BaseInfo.SecurityNameAbbr,
+		// 营业收入
+		YYSR: stock.HistoricalFinaMainData.ValueList(ctx, eastmoney.ValueListTypeRevenue, 5, eastmoney.FinaReportTypeYear),
 		// 毛利率
 		MLL: stock.HistoricalFinaMainData.ValueList(ctx, eastmoney.ValueListTypeMLL, 5,	eastmoney.FinaReportTypeYear),
 		// 三项费用率
@@ -177,14 +185,16 @@ func NewExportorRNgData(ctx context.Context, stock Stock) ExportorRNgData {
 		GLFYL: stock.HistoricalGincomeList.ValueList(ctx, eastmoney.ValueListTypeGLFYY, 5, eastmoney.FinaReportTypeYear),
 		// 财务费用率
 		CWFYL: stock.HistoricalGincomeList.ValueList(ctx, eastmoney.ValueListTypeCWFYY, 5, eastmoney.FinaReportTypeYear),
-		// 净利润率
-		JLRL: stock.HistoricalFinaMainData.ValueList(ctx, eastmoney.ValueListTypeJLL, 5, eastmoney.FinaReportTypeYear),
+		// 净利润
+		JLR: stock.HistoricalFinaMainData.ValueList(ctx, eastmoney.ValueListTypeNetProfit, 5, eastmoney.FinaReportTypeYear),
 		// 资产负债率
 		ZCFZL: stock.HistoricalFinaMainData.ValueList(ctx, eastmoney.ValueListTypeZCFZL, 5, eastmoney.FinaReportTypeYear),
-		// 固定资产比重
-		GDZCBZ: stock.HistoricalFinaMainData.ValueList(ctx, eastmoney.ValueListTypeJLL, 5, eastmoney.FinaReportTypeYear),
 		// 净资产收益率
 		JZCSYL: stock.HistoricalFinaMainData.ValueList(ctx, eastmoney.ValueListTypeROE, 5, eastmoney.FinaReportTypeYear),
+		// 净利润率
+		JLRL: stock.HistoricalFinaMainData.ValueList(ctx, eastmoney.ValueListTypeJLL, 5, eastmoney.FinaReportTypeYear),
+		// 权益乘数
+		QYCS: stock.HistoricalFinaMainData.ValueList(ctx, eastmoney.ValueListTypeQYCS, 5, eastmoney.FinaReportTypeYear),
 		// 总资产周转率
 		ZZCZZL: stock.HistoricalFinaMainData.ValueList(ctx, eastmoney.ValueListTypeTOZZL, 5, eastmoney.FinaReportTypeYear),
 		// 经营性现金流净额比净利润

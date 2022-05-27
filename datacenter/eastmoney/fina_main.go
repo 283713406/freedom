@@ -268,6 +268,8 @@ const (
 	ValueListTypeYYSRZZL ValueListType = "YYSRZZL"
 	// ValueListTypeJLRZZL 净利润增长率
 	ValueListTypeJLRZZL ValueListType = "JLRZZL"
+	// ValueListTypeQYCS 权益乘数
+	ValueListTypeQYCS ValueListType = "QYCS"
 )
 
 // FinaValueList 历史数据值列表
@@ -329,6 +331,8 @@ func (h HistoricalFinaMainData) ValueList(
 			value = i.Totaloperaterevetz
 		case ValueListTypeJLRZZL:
 			value = i.Kcfjcxsyjlrtz
+		case ValueListTypeQYCS:
+			value = i.Qycs
 		}
 		r = append(r, value)
 	}

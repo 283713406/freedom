@@ -94,8 +94,8 @@ func (e ExportorRNg) ExportRNgExcel(ctx context.Context, filename string) (resul
 	}
 
 	// 写 body
-	lines := []string{"毛利率", "三项费用率", "销售费用率", "管理费用率", "财务费用率", "净利润率", "资产负债率",
-		"固定资产比重", "净资产收益率", "总资产周转率", "经营性现金流净额比净利润", "营业收入增长率", "扣非净利润增长率"}
+	lines := []string{"营业收入", "毛利率", "三项费用率", "销售费用率", "管理费用率", "财务费用率", "净利润", "资产负债率",
+		"净资产收益率", "净利润率", "权益乘数",  "总资产周转率", "经营性现金流净额比净利润", "营业收入增长率", "扣非净利润增长率"}
 	for _, sheet := range sheets {
 		// 写 行头
 		for i, line := range lines {
