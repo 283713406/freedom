@@ -78,3 +78,30 @@ func YiWanString(num float64) string {
 func SplitStringFields(s string) []string {
 	return regexp.MustCompile("[\\/\\:\\,\\;\\.\\s\\-\\|\\#\\$\\%\\&\\+\\=\\?]+").Split(s, -1)
 }
+
+func GetPercentSlice(a []float64) []string {
+	var res []string
+	for _, i := range a {
+		tmp := fmt.Sprintf("%.2f%%", i)
+		res = append(res, tmp)
+	}
+	return res
+}
+
+func Get2DecimalSlice(a []float64) []string {
+	var res []string
+	for _, i := range a {
+		tmp := fmt.Sprintf("%.2f", i)
+		res = append(res, tmp)
+	}
+	return res
+}
+
+func GetYiWanSlice(a []float64) []string {
+	var res []string
+	for _, i := range a {
+		tmp := YiWanString(i)
+		res = append(res, tmp)
+	}
+	return res
+}

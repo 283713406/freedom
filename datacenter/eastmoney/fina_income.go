@@ -260,12 +260,7 @@ const (
 )
 
 // ValueList 获取历史数据值，最新的在最前面
-func (g GincomeDataList) ValueList(
-	ctx context.Context,
-	valueType ValueListType,
-	count int,
-	reportType FinaReportType,
-) FinaValueList {
+func (g GincomeDataList) ValueList(ctx context.Context, valueType ValueListType, count int, reportType FinaReportType) FinaValueList {
 	r := []float64{}
 	data := g.FilterByReportType(ctx, reportType)
 	dataLen := len(data)
@@ -318,7 +313,7 @@ func (e EastMoney) QueryFinaGincomeData(ctx context.Context, secuCode string) (G
 		"type":   "RPT_F10_FINANCE_GINCOME",
 		"sty":    "APP_F10_GINCOME",
 		"filter": fmt.Sprintf(`(SECUCODE="%s")`, strings.ToUpper(secuCode)),
-		"ps":     "10",
+		"ps":     "100",
 		"sr":     "-1",
 		"st":     "REPORT_DATE",
 	}

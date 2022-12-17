@@ -120,7 +120,7 @@ func (e ExportorRNg) ExportRNgExcel(ctx context.Context, filename string) (resul
 			for k, line := range lines {
 				row := k + 3
 				values := headerValueMap[line]
-				for i, value := range values.([]float64)  {
+				for i, value := range values.([]string)  {
 					axis, err := excelize.CoordinatesToCellName(i+col, row)
 					if err != nil {
 						logging.Error(ctx, "CoordinatesToCellName error:"+err.Error())

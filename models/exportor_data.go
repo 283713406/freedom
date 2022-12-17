@@ -134,35 +134,35 @@ type ExportorRNgData struct {
 	// 股票名
 	Name string `json:"name"                      csv:"股票名"`
 	// 营业收入
-	YYSR []float64 `json:"yysr"                    csv:"营业收入"`
+	YYSR []string `json:"yysr"                    csv:"营业收入"`
 	// 毛利率
-	MLL []float64 `json:"mll"                    csv:"毛利率"`
+	MLL []string `json:"mll"                    csv:"毛利率"`
 	// 三项费用率
-	SXFYL []float64 `json:"sxfyl"                    csv:"三项费用率"`
+	SXFYL []string `json:"sxfyl"                    csv:"三项费用率"`
 	// 销售费用率
-	XSFYL []float64 `json:"xsfyl"                    csv:"销售费用率"`
+	XSFYL []string `json:"xsfyl"                    csv:"销售费用率"`
 	// 管理费用率
-	GLFYL []float64 `json:"glfyl"                    csv:"管理费用率"`
+	GLFYL []string `json:"glfyl"                    csv:"管理费用率"`
 	// 财务费用率
-	CWFYL []float64 `json:"cwfyl"                    csv:"财务费用率"`
+	CWFYL []string `json:"cwfyl"                    csv:"财务费用率"`
 	// 净利润
-	JLR []float64 `json:"jlr"                    csv:"净利润"`
+	JLR []string `json:"jlr"                    csv:"净利润"`
 	// 资产负债率
-	ZCFZL []float64 `json:"zcfzl"                    csv:"资产负债率"`
+	ZCFZL []string `json:"zcfzl"                    csv:"资产负债率"`
 	// 净资产收益率
-	JZCSYL []float64 `json:"jzcsyl"                    csv:"净资产收益率"`
+	JZCSYL []string `json:"jzcsyl"                    csv:"净资产收益率"`
 	// 净利润率
-	JLRL []float64 `json:"jlrl"                    csv:"净利润率"`
+	JLRL []string `json:"jlrl"                    csv:"净利润率"`
 	// 权益乘数
-	QYCS []float64 `json:"qycs"                    csv:"权益乘数"`
+	QYCS []string `json:"qycs"                    csv:"权益乘数"`
 	// 总资产周转率
-	ZZCZZL []float64 `json:"zzczzl"                    csv:"总资产周转率"`
+	ZZCZZL []string `json:"zzczzl"                    csv:"总资产周转率"`
 	// 经营性现金流净额比净利润
-	XJLBJLR []float64 `json:"xjlbjlr"                    csv:"经营性现金流净额比净利润"`
+	XJLBJLR []string `json:"xjlbjlr"                    csv:"经营性现金流净额比净利润"`
 	// 营业收入增长率
-	YYSRZZL []float64 `json:"yysrzzl"           csv:"营业收入增长率"`
+	YYSRZZL []string `json:"yysrzzl"           csv:"营业收入增长率"`
 	// 扣非净利润增长率
-	KFJLLZZL []float64 `json:"kfjlrzzl"           csv:"扣非净利润增长率"`
+	KFJLLZZL []string `json:"kfjlrzzl"           csv:"扣非净利润增长率"`
 }
 
 // ExportorDataList 要导出的数据列表
@@ -174,35 +174,35 @@ func NewExportorRNgData(ctx context.Context, stock Stock) ExportorRNgData {
 	return ExportorRNgData{
 		Name: stock.BaseInfo.SecurityNameAbbr,
 		// 营业收入
-		YYSR: stock.HistoricalFinaMainData.ValueList(ctx, eastmoney.ValueListTypeRevenue, 5, eastmoney.FinaReportTypeYear),
+		YYSR: utils.GetYiWanSlice(stock.HistoricalFinaMainData.ValueList(ctx, eastmoney.ValueListTypeRevenue, 5, eastmoney.FinaReportTypeYear)),
 		// 毛利率
-		MLL: stock.HistoricalFinaMainData.ValueList(ctx, eastmoney.ValueListTypeMLL, 5,	eastmoney.FinaReportTypeYear),
+		MLL: utils.GetPercentSlice(stock.HistoricalFinaMainData.ValueList(ctx, eastmoney.ValueListTypeMLL, 5,	eastmoney.FinaReportTypeYear)),
 		// 三项费用率
-		SXFYL: stock.HistoricalGincomeList.ValueList(ctx, eastmoney.ValueListTypeSXFYL, 5, eastmoney.FinaReportTypeYear),
+		SXFYL: utils.GetPercentSlice(stock.HistoricalGincomeList.ValueList(ctx, eastmoney.ValueListTypeSXFYL, 5, eastmoney.FinaReportTypeYear)),
 		// 销售费用率
-		XSFYL: stock.HistoricalGincomeList.ValueList(ctx, eastmoney.ValueListTypeXSFYY, 5, eastmoney.FinaReportTypeYear),
+		XSFYL: utils.GetPercentSlice(stock.HistoricalGincomeList.ValueList(ctx, eastmoney.ValueListTypeXSFYY, 5, eastmoney.FinaReportTypeYear)),
 		// 管理费用率
-		GLFYL: stock.HistoricalGincomeList.ValueList(ctx, eastmoney.ValueListTypeGLFYY, 5, eastmoney.FinaReportTypeYear),
+		GLFYL: utils.GetPercentSlice(stock.HistoricalGincomeList.ValueList(ctx, eastmoney.ValueListTypeGLFYY, 5, eastmoney.FinaReportTypeYear)),
 		// 财务费用率
-		CWFYL: stock.HistoricalGincomeList.ValueList(ctx, eastmoney.ValueListTypeCWFYY, 5, eastmoney.FinaReportTypeYear),
+		CWFYL: utils.GetPercentSlice(stock.HistoricalGincomeList.ValueList(ctx, eastmoney.ValueListTypeCWFYY, 5, eastmoney.FinaReportTypeYear)),
 		// 净利润
-		JLR: stock.HistoricalFinaMainData.ValueList(ctx, eastmoney.ValueListTypeNetProfit, 5, eastmoney.FinaReportTypeYear),
+		JLR: utils.GetYiWanSlice(stock.HistoricalFinaMainData.ValueList(ctx, eastmoney.ValueListTypeNetProfit, 5, eastmoney.FinaReportTypeYear)),
 		// 资产负债率
-		ZCFZL: stock.HistoricalFinaMainData.ValueList(ctx, eastmoney.ValueListTypeZCFZL, 5, eastmoney.FinaReportTypeYear),
+		ZCFZL: utils.GetPercentSlice(stock.HistoricalFinaMainData.ValueList(ctx, eastmoney.ValueListTypeZCFZL, 5, eastmoney.FinaReportTypeYear)),
 		// 净资产收益率
-		JZCSYL: stock.HistoricalFinaMainData.ValueList(ctx, eastmoney.ValueListTypeROE, 5, eastmoney.FinaReportTypeYear),
+		JZCSYL: utils.GetPercentSlice(stock.HistoricalFinaMainData.ValueList(ctx, eastmoney.ValueListTypeROE, 5, eastmoney.FinaReportTypeYear)),
 		// 净利润率
-		JLRL: stock.HistoricalFinaMainData.ValueList(ctx, eastmoney.ValueListTypeJLL, 5, eastmoney.FinaReportTypeYear),
+		JLRL: utils.GetPercentSlice(stock.HistoricalFinaMainData.ValueList(ctx, eastmoney.ValueListTypeJLL, 5, eastmoney.FinaReportTypeYear)),
 		// 权益乘数
-		QYCS: stock.HistoricalFinaMainData.ValueList(ctx, eastmoney.ValueListTypeQYCS, 5, eastmoney.FinaReportTypeYear),
+		QYCS: utils.Get2DecimalSlice(stock.HistoricalFinaMainData.ValueList(ctx, eastmoney.ValueListTypeQYCS, 5, eastmoney.FinaReportTypeYear)),
 		// 总资产周转率
-		ZZCZZL: stock.HistoricalFinaMainData.ValueList(ctx, eastmoney.ValueListTypeTOZZL, 5, eastmoney.FinaReportTypeYear),
+		ZZCZZL: utils.GetPercentSlice(stock.HistoricalFinaMainData.ValueList(ctx, eastmoney.ValueListTypeTOZZL, 5, eastmoney.FinaReportTypeYear)),
 		// 经营性现金流净额比净利润
-		XJLBJLR: stock.HistoricalFinaMainData.ValueList(ctx, eastmoney.ValueListTypeXJLBJLR, 5, eastmoney.FinaReportTypeYear),
+		XJLBJLR: utils.Get2DecimalSlice(stock.HistoricalFinaMainData.ValueList(ctx, eastmoney.ValueListTypeXJLBJLR, 5, eastmoney.FinaReportTypeYear)),
 		// 营业收入增长率
-		YYSRZZL: stock.HistoricalFinaMainData.ValueList(ctx, eastmoney.ValueListTypeYYSRZZL, 5, eastmoney.FinaReportTypeYear),
+		YYSRZZL: utils.GetPercentSlice(stock.HistoricalFinaMainData.ValueList(ctx, eastmoney.ValueListTypeYYSRZZL, 5, eastmoney.FinaReportTypeYear)),
 		// 扣非净利润增长率
-		KFJLLZZL: stock.HistoricalFinaMainData.ValueList(ctx, eastmoney.ValueListTypeJLRZZL, 5, eastmoney.FinaReportTypeYear),
+		KFJLLZZL: utils.GetPercentSlice(stock.HistoricalFinaMainData.ValueList(ctx, eastmoney.ValueListTypeJLRZZL, 5, eastmoney.FinaReportTypeYear)),
 	}
 }
 
