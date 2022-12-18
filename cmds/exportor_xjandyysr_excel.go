@@ -10,20 +10,9 @@ import (
 	"github.com/360EntSecGroup-Skylar/excelize/v2"
 )
 
-var (
-	// BodyStyle 表格Style
-	Body = &excelize.Style{
-		Alignment: &excelize.Alignment{
-			Horizontal:      "center",
-			JustifyLastLine: true,
-			Vertical:        "center",
-			WrapText:        true,
-		},
-	}
-)
 
 // ExportExcel 导出 excel
-func (e ExportorRNg) ExportRNgExcel(ctx context.Context, filename string) (result []byte, err error) {
+func (e ExportorXJAndYYSR) ExportXJAndYYSRExcel(ctx context.Context, filename string) (result []byte, err error) {
 	f := excelize.NewFile()
 
 	// 创建全部数据表
@@ -37,7 +26,7 @@ func (e ExportorRNg) ExportRNgExcel(ctx context.Context, filename string) (resul
 		}
 	}
 
-	headers := []string{"观察项目", "具体数据"}
+	headers := []string{"年份", "营业收入", "销售商品提供劳务收到的现金"}
 	bodyStyle, err := f.NewStyle(Body)
 	if err != nil {
 		logging.Error(ctx, "New BodyStyle error:"+err.Error())
@@ -61,7 +50,7 @@ func (e ExportorRNg) ExportRNgExcel(ctx context.Context, filename string) (resul
 			logging.Error(ctx, "CoordinatesToCellName error:"+err.Error())
 			continue
 		}
-		vcell, err := excelize.CoordinatesToCellName(6, 17)
+		vcell, err := excelize.CoordinatesToCellName(3, 10)
 		if err != nil {
 			logging.Error(ctx, "CoordinatesToCellName error:"+err.Error())
 			continue
@@ -69,11 +58,8 @@ func (e ExportorRNg) ExportRNgExcel(ctx context.Context, filename string) (resul
 		f.SetCellStyle(sheet, hcell, vcell, bodyStyle)
 	}
 
-	years := []string{"2021", "2020", "2019", "2018", "2017"}
 	for _, sheet := range sheets {
-		f.MergeCell(sheet, "B1", "F1")
-		f.MergeCell(sheet, "A1", "A2")
-		// 写 列头
+		// 写 行头
 		for i, header := range headers {
 			axis, err := excelize.CoordinatesToCellName(i+1, 1)
 			if err != nil {
@@ -82,9 +68,13 @@ func (e ExportorRNg) ExportRNgExcel(ctx context.Context, filename string) (resul
 			}
 			f.SetCellValue(sheet, axis, header)
 		}
+	}
 
+	years := []string{"2017", "2018", "2019", "2020", "2021"}
+	for _, sheet := range sheets {
+		// 写 列头
 		for i, year := range years {
-			axis, err := excelize.CoordinatesToCellName(i+2, 2)
+			axis, err := excelize.CoordinatesToCellName(1, i+2)
 			if err != nil {
 				logging.Error(ctx, "CoordinatesToCellName error:"+err.Error())
 				continue
@@ -94,20 +84,6 @@ func (e ExportorRNg) ExportRNgExcel(ctx context.Context, filename string) (resul
 	}
 
 	// 写 body
-	lines := []string{"营业收入", "毛利率", "三项费用率", "销售费用率", "管理费用率", "财务费用率", "净利润", "资产负债率",
-		"净资产收益率", "净利润率", "权益乘数",  "总资产周转率", "经营性现金流净额比净利润", "营业收入增长率", "扣非净利润增长率"}
-	for _, sheet := range sheets {
-		// 写 行头
-		for i, line := range lines {
-			axis, err := excelize.CoordinatesToCellName(1, i+3)
-			if err != nil {
-				logging.Error(ctx, "CoordinatesToCellName error:"+err.Error())
-				continue
-			}
-			f.SetCellValue(sheet, axis, line)
-		}
-	}
-
 	for _, sheet := range sheets {
 		col := 2
 		logging.Debugf(ctx,"sheet is %s", sheet)
@@ -117,8 +93,8 @@ func (e ExportorRNg) ExportRNgExcel(ctx context.Context, filename string) (resul
 			}
 			logging.Debugf(ctx,"Stocks name is %s", stock.Name)
 			headerValueMap := stock.GetHeaderValueMap()
-			for k, line := range lines {
-				row := k + 3
+			for k, line := range headers {
+				row := k + 2
 				values := headerValueMap[line]
 				for i, value := range values.([]string)  {
 					axis, err := excelize.CoordinatesToCellName(i+col, row)

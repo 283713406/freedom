@@ -284,12 +284,7 @@ func (fvl FinaValueList) String() string {
 }
 
 // ValueList 获取历史数据值，最新的在最前面
-func (h HistoricalFinaMainData) ValueList(
-	ctx context.Context,
-	valueType ValueListType,
-	count int,
-	reportType FinaReportType,
-) FinaValueList {
+func (h HistoricalFinaMainData) ValueList(ctx context.Context, valueType ValueListType, count int, reportType FinaReportType) FinaValueList {
 	r := []float64{}
 	data := h.FilterByReportType(ctx, reportType)
 	dataLen := len(data)

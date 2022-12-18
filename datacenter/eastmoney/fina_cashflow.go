@@ -276,6 +276,73 @@ type CashflowData struct {
 // CashflowDataList cashflow 列表
 type CashflowDataList []CashflowData
 
+// FilterByReportType 按财报类型过滤：一季报，中报，三季报，年报
+func (c CashflowDataList) FilterByReportType(ctx context.Context, reportType CashReportType) CashflowDataList {
+	result := CashflowDataList{}
+	for _, i := range c {
+		if i.ReportType == string(reportType) {
+			result = append(result, i)
+		}
+	}
+	return result
+}
+
+// FinaReportType 财报类型
+type CashReportType string
+
+const (
+	// GinReportTypeQ1 一季报
+	CashReportTypeQ1 = "一季报"
+	// GinReportTypeMid 中报
+	CashReportTypeMid = "中报"
+	// GinReportTypeQ3 三季报
+	CashReportTypeQ3 = "三季报"
+	// GinReportTypeYear 年报
+	CashReportTypeYear = "年报"
+)
+
+const (
+	// ValueListTypeJYXXJL 经营性现金流净额
+	ValueListTypeJYXXJL ValueListType = "JYXXJL"
+	// ValueListTypeXSSPTGLWXJ 销售商品提供劳务收到的现金
+	ValueListTypeXSSPTGLWXJ ValueListType = "XSSPTGLWXJ"
+	// ValueListTypeXJYE 现金余额
+	ValueListTypeXJYE ValueListType = "XJYE"
+	// ValueListTypeXJYE 投资支出
+	ValueListTypeTZZC ValueListType = "TZZC"
+)
+
+// ValueList 获取历史数据值，最新的在最前面
+func (c CashflowDataList) ValueList(ctx context.Context, valueType ValueListType, count int, reportType CashReportType) FinaValueList {
+	r := []float64{}
+	data := c.FilterByReportType(ctx, reportType)
+	dataLen := len(data)
+	if dataLen == 0 {
+		return r
+	}
+	if count > 0 {
+		if count > dataLen {
+			count = dataLen
+		}
+		data = data[:count]
+	}
+	for _, i := range data {
+		value := float64(-1)
+		switch valueType {
+		case ValueListTypeJYXXJL:
+			value = i.NetcashOperate
+		case ValueListTypeXSSPTGLWXJ:
+			value = i.SalesServices
+		case ValueListTypeXJYE:
+			value = i.BeginCce
+		case ValueListTypeTZZC:
+			value = i.TotalInvestOutflow
+		}
+		r = append(r, value)
+	}
+	return r
+}
+
 // RespFinaCashflowData 现金流量接口返回数据
 type RespFinaCashflowData struct {
 	Version string `json:"version"`
@@ -298,7 +365,7 @@ func (e EastMoney) QueryFinaCashflowData(ctx context.Context, secuCode string) (
 		"type":   "RPT_F10_FINANCE_GCASHFLOW",
 		"sty":    "APP_F10_GCASHFLOW",
 		"filter": fmt.Sprintf(`(SECUCODE="%s")`, strings.ToUpper(secuCode)),
-		"ps":     "10",
+		"ps":     "100",
 		"sr":     "-1",
 		"st":     "REPORT_DATE",
 	}

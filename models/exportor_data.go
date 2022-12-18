@@ -206,6 +206,58 @@ func NewExportorRNgData(ctx context.Context, stock Stock) ExportorRNgData {
 	}
 }
 
+// ExportorXJAndJLRData 数据模板
+// "净利润", "经营性现金流净额"
+type ExportorXJAndJLRData struct {
+	// 股票名
+	Name string `json:"name"                      csv:"股票名"`
+	// 净利润
+	JLR []string `json:"jlr"                      csv:"净利润"`
+	// 经营性现金流净额
+	JYXXJL []string `json:"jyxxjl"               csv:"经营性现金流净额"`
+}
+
+// ExportorXJAndJLDataList 要导出的数据列表
+type ExportorXJAndJLRDataList []ExportorXJAndJLRData
+
+// NewExportorXJAndJLRData 创建 ExportorXJAndJLRData 对象
+func NewExportorXJAndJLRData(ctx context.Context, stock Stock) ExportorXJAndJLRData {
+
+	return ExportorXJAndJLRData{
+		Name: stock.BaseInfo.SecurityNameAbbr,
+		// 净利润
+		JLR: utils.GetYiWanSlice(stock.HistoricalFinaMainData.ValueList(ctx, eastmoney.ValueListTypeNetProfit, 5, eastmoney.FinaReportTypeYear)),
+		// 经营性现金流净额
+		JYXXJL: utils.GetYiWanSlice(stock.HistoricalCashflowList.ValueList(ctx, eastmoney.ValueListTypeJYXXJL, 5, eastmoney.FinaReportTypeYear)),
+	}
+}
+
+// ExportorXJAndYYSRData 数据模板
+// "营业收入", "销售商品提供劳务收到的现金"
+type ExportorXJAndYYSRData struct {
+	// 股票名
+	Name string `json:"name"                      csv:"股票名"`
+	// 营业收入
+	YYSR []string `json:"yysr"                    csv:"营业收入"`
+	// 销售商品提供劳务收到的现金
+	XSSPTGLWXJ []string `json:"xssptglwxj"        csv:"销售商品提供劳务收到的现金"`
+}
+
+// ExportorXJAndYYSRDataList 要导出的数据列表
+type ExportorXJAndYYSRDataList []ExportorXJAndYYSRData
+
+// NewExportorXJAndJLRData 创建 ExportorXJAndYYSRData 对象
+func NewExportorXJAndYYSRData(ctx context.Context, stock Stock) ExportorXJAndYYSRData {
+
+	return ExportorXJAndYYSRData{
+		Name: stock.BaseInfo.SecurityNameAbbr,
+		// 营业收入
+		YYSR: utils.GetYiWanSlice(stock.HistoricalFinaMainData.ValueList(ctx, eastmoney.ValueListTypeRevenue, 5, eastmoney.FinaReportTypeYear)),
+		// 销售商品提供劳务收到的现金
+		XSSPTGLWXJ: utils.GetYiWanSlice(stock.HistoricalCashflowList.ValueList(ctx, eastmoney.ValueListTypeXSSPTGLWXJ, 5, eastmoney.FinaReportTypeYear)),
+	}
+}
+
 // GetIndustryList 获取行业分类列表
 func (d ExportorRNgDataList) GetName() []string {
 	result := []string{}
@@ -219,6 +271,36 @@ func (d ExportorRNgDataList) GetName() []string {
 
 // GetHeaderValueMap 获取以 csv tag 为 key 的 Data map
 func (d ExportorRNgData) GetHeaderValueMap() map[string]interface{} {
+	return utils.StructToMap(&d, "csv")
+}
+
+func (d ExportorXJAndJLRDataList) GetName() []string {
+	result := []string{}
+	for _, stock := range d {
+		if !utils.IsStrInSlice(stock.Name, result) {
+			result = append(result, stock.Name)
+		}
+	}
+	return result
+}
+
+// GetHeaderValueMap 获取以 csv tag 为 key 的 Data map
+func (d ExportorXJAndJLRData) GetHeaderValueMap() map[string]interface{} {
+	return utils.StructToMap(&d, "csv")
+}
+
+func (d ExportorXJAndYYSRDataList) GetName() []string {
+	result := []string{}
+	for _, stock := range d {
+		if !utils.IsStrInSlice(stock.Name, result) {
+			result = append(result, stock.Name)
+		}
+	}
+	return result
+}
+
+// GetHeaderValueMap 获取以 csv tag 为 key 的 Data map
+func (d ExportorXJAndYYSRData) GetHeaderValueMap() map[string]interface{} {
 	return utils.StructToMap(&d, "csv")
 }
 

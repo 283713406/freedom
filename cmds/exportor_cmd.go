@@ -248,6 +248,8 @@ func ActionExportor() func(c *cli.Context) error {
 		logging.Debug(ctx, "exportor params:"+string(b))
 		if len(keyword) != 0 {
 			ExportRNg(ctx, keywords, selector)
+			ExportXJAndJLR(ctx, keywords, selector)
+			ExportXJAndYYSR(ctx, keywords, selector)
 		}else {
 			Export(ctx, filename, selector)
 		}
